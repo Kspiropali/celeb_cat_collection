@@ -1,12 +1,12 @@
 const db = require("../db/db");
 
 class Cat {
-  constructor(name, age, owner, breed, instagram) {
+  constructor(name, age, breed) {
     this.name = name;
     this.age = age;
-    this.owner = owner;
+    this.owner = null;
     this.breed = breed;
-    this.instagram = instagram;
+    this.instagram = "@instagram/"+this.name;
   }
 
   static getAllCats = async () => {

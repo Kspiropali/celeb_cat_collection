@@ -50,7 +50,7 @@ async function login(req, res) {
       throw new Error("Incorrect credentials.");
     } else {
       const token = await Token.create(user.username);
-      res.status(200).json({ authenticated: true, token: token.token });
+      res.cookie("authorization", token.token, {httpOnly: false}).status(200).json({ authorized: true});
     }
   } catch (error) {
     res.status(403).json({ error: "Unauthorized" });

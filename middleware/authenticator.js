@@ -2,17 +2,16 @@ const Token = require("../models/Token");
 
 async function authenticator(req, res, next) {
   try {
-    const userToken = req.headers["authorization"];
-
-    if (userToken == "null") {
-      throw new Error("User not authenticated.");
+    const extractedToken = req.headers.cookie.split("=")[1];
+    
+    if (extractedToken.length === 0) {
+      throw new Error();
     } else {
-      const validToken = await Token.getOneByToken(userToken);
-
+      const validToken = await Token.getOneByToken(extractedToken);
       next();
     }
   } catch (err) {
-    res.status(403).json({ error: err.message });
+    res.status(403).redirect("/");
   }
 }
 

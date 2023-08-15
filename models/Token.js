@@ -3,9 +3,9 @@ const { v4: uuidv4 } = require("uuid");
 const db = require("../db/db");
 
 class Token {
-  constructor({ token_id, user_id, token }) {
+  constructor({ token_id, username, token }) {
     this.token_id = token_id;
-    this.user_id = user_id;
+    this.username = username;
     this.token = token;
   }
 

@@ -2,7 +2,6 @@ const Cat = require("../models/Cat");
 
 const getAll = async (req, res) => {
   try {
-    console.log((await Cat.getAllCats()))
     return res.send((await Cat.getAllCats()).rows);
   } catch (error) {
     return res.status(500).send("Internal Server Error!" + error);
@@ -24,12 +23,8 @@ const getOne = async (req, res) => {
 };
 
 const addOne = async (req, res) => {
-  try {
-    const cat = new Cat(req.body);
-    return res.send((await Cat.add(cat)).rows);
-  } catch (error) {
-    return res.status(500).send("Could not add cat!");
-  }
+    const cat = new Cat(req.body.name, parseInt(req.body.age), req.body.breed);
+    return res.status(201).send((await Cat.add(cat)).rows);
 };
 
 const deleteOne = async (req, res) => {
