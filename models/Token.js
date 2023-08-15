@@ -41,6 +41,10 @@ class Token {
       return new Token(response.rows[0]);
     }
   }
+
+  static async deleteByToken(token){
+    await db.query("DELETE FROM token WHERE token = $1", [token]);
+  }
 }
 
 module.exports = Token;

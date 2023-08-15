@@ -23,16 +23,26 @@ document.querySelector("#cats_list").addEventListener("submit", async (e) => {
       .getElementById("cats")
       .appendChild(createPostElement(JSON.parse(options.body)));
 
-      document.querySelector("#cat_name").value = "";
-      document.querySelector("#cat_age").value = "";
-      document.querySelector("#cat_breed").value = "";
+    document.querySelector("#cat_name").value = "";
+    document.querySelector("#cat_age").value = "";
+    document.querySelector("#cat_breed").value = "";
   }
+});
+
+document.querySelector("#logout").addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  fetch("http://localhost:8080/users/logout", {
+    method: "POST",
+  });
+
+  window.location.assign("/");
 });
 
 function createPostElement(data) {
   const name = document.createElement("div");
   name.addEventListener("click", async (e) => {
-    fetch("/cats/delete/"+data.id);
+    fetch("/cats/delete/" + data.id);
     name.remove();
   });
   name.className = "cat";

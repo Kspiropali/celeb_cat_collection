@@ -50,11 +50,22 @@ async function login(req, res) {
       throw new Error("Incorrect credentials.");
     } else {
       const token = await Token.create(user.username);
-      res.cookie("authorization", token.token, {httpOnly: false}).status(200).json({ authorized: true});
+      res
+        .cookie("authorization", token.token, { httpOnly: false })
+        .status(200)
+        .json({ authorized: true });
     }
   } catch (error) {
     res.status(403).json({ error: "Unauthorized" });
   }
+}
+
+async function logout(req, res) {
+  try {
+    Token.deleteByToken(res.locals.token);
+    res.clearCookie("authorization");
+    res.status(302).redirect("/");
+  } catch (error) {}
 }
 
 const deleteOne = async (req, res) => {
@@ -65,4 +76,8 @@ const deleteOne = async (req, res) => {
   }
 };
 
-module.exports = { getAll, getOne, register, deleteOne, login };
+const loggedInCheck = async(req, res) =>{
+  res.status(302).json({status: "authorized"});
+}
+
+module.exports = { getAll, getOne, register, deleteOne, login, logout, loggedInCheck };
