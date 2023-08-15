@@ -27,7 +27,7 @@ CREATE TABLE cat (
 
 CREATE TABLE token (
     token_id INT GENERATED ALWAYS AS IDENTITY,
-    username VARCHAR(128) UNIQUE NOT NULL,
+    username VARCHAR(128) NOT NULL,
     token CHAR(36) UNIQUE NOT NULL,
     PRIMARY KEY (token_id),
     FOREIGN KEY (username) REFERENCES user_account("username")

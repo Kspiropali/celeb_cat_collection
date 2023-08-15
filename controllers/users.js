@@ -26,28 +26,25 @@ const getOne = async (req, res) => {
 };
 
 async function register(req, res) {
-  
-    const data = req.body;
+  const data = req.body;
 
-    // Generate a salt with a specific cost
-    const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+  // Generate a salt with a specific cost
+  const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
 
-    // Hash the password
-    data["password"] = await bcrypt.hash(data["password"], salt);
-    data["isAdmin"] = false;
-    const result = await User.create(data);
+  // Hash the password
+  data["password"] = await bcrypt.hash(data["password"], salt);
+  data["isAdmin"] = false;
+  const result = await User.create(data);
 
-    return res.status(201).json({result: "Success!"});
- 
+  return res.status(201).json({ result: "Success!" });
 }
 
 async function login(req, res) {
-  const data = req.body;
-  
+  try {
+    const data = req.body;
+
     const user = await User.getOneByUsername(data.username);
     const authenticated = await bcrypt.compare(data.password, user["password"]);
-
-    console.log(authenticated)
 
     if (!authenticated) {
       throw new Error("Incorrect credentials.");
@@ -55,7 +52,9 @@ async function login(req, res) {
       const token = await Token.create(user.username);
       res.status(200).json({ authenticated: true, token: token.token });
     }
- 
+  } catch (error) {
+    res.status(403).json({ error: "Unauthorized" });
+  }
 }
 
 const deleteOne = async (req, res) => {

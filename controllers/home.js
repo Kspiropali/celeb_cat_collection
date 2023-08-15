@@ -1,9 +1,9 @@
 const path = require("path");
 const public = path.join(__dirname, "../static");
 
-const index = async (req, res) => {
-  res.sendFile(path.join(public, "index.html"));
-};
+// const index = async (req, res) => {
+//   res.sendFile(path.join(public, "index.html"));
+// };
 
 const register = async (req, res) => {
     res.sendFile(path.join(public, "register.html"));
@@ -17,4 +17,4 @@ const homepage = async (req, res) => {
     res.sendFile(path.join(public, "homepage.html"));
 };
 
-module.exports = { index, register, login, homepage };
+module.exports = { register, login, homepage };
