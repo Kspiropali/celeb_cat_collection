@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec -it cat_db-instance psql -U kris cat_db
