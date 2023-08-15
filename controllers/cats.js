@@ -11,7 +11,7 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   try {
     const result = (await Cat.getById(parseInt(req.params.id))).rows;
-    if(result.length === 0){
+    if (result.length === 0) {
       throw new Error("Cat was not found");
     }
     return res.send(result);
@@ -23,8 +23,9 @@ const getOne = async (req, res) => {
 };
 
 const addOne = async (req, res) => {
-    const cat = new Cat(req.body.name, parseInt(req.body.age), req.body.breed);
-    return res.status(201).send((await Cat.add(cat)).rows);
+  const cat = new Cat(req.body.name, parseInt(req.body.age), req.body.breed);
+  cat.owner = res.locals.user;
+  return res.status(201).send((await Cat.add(cat)).rows);
 };
 
 const deleteOne = async (req, res) => {

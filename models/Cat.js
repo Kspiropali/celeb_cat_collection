@@ -4,7 +4,6 @@ class Cat {
   constructor(name, age, breed) {
     this.name = name;
     this.age = age;
-    this.owner = null;
     this.breed = breed;
     this.instagram = "@instagram/"+this.name;
   }

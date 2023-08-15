@@ -8,6 +8,7 @@ async function authenticator(req, res, next) {
       throw new Error();
     } else {
       const validToken = await Token.getOneByToken(extractedToken);
+      res.locals.user = validToken.username; 
       next();
     }
   } catch (err) {
